@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>to do list</title>
+    <style>
+      .deleted {
+        text-decoration: line-through;
+        color: rgb(240, 18, 18);
+      }
+    </style>
+  </head>
+
+  <body>
+    <h1>TO-DO LIST</h1>
+    <div>
+      <input id="aggiungiObiettivi" type="text" placeholder="i miei obiettivi" />
+      <!-- creo la mia "barra di ricerca"-->
+      <button id="btn1">CLICCA QUI</button
+      ><!-- creo il bottone che mi dovrà far uscire il testo come checkbox-->
+      <ul id="testoObiettivi">
+        <!--creo dove andrà a finire il testo -->
+      </ul>
+    </div>
+  </body>
+
+  <script>
+    const aggiungiText = document.getElementById("aggiungiObiettivi"); // variabile collegata all'id input
+    console.dir(aggiungiText);
+    const click = document.getElementById("btn1"); //variabile collegata all id bottone
+    console.dir(click);
+    const testo = document.getElementById("testoObiettivi"); // variabile collegata all id lista(ul)
+    console.dir(testo);
+    click.addEventListener("click", function () //
+    {
+      const valore = aggiungiText.value;
+      if (valore !== "") {
+        const nuovoTesto = document.createElement("li");
+        const checkbox = document.createElement("input");
+        checkbox.type = "checkbox";
+        const label = document.createElement("label");
+        label.textContent = valore;
+
+        checkbox.addEventListener("change", function () //nuovo evento associato a checkbox(change)
+        {
+          label.classList.toggle("deleted", checkbox.checked);
+        });
+        nuovoTesto.appendChild(label);
+        nuovoTesto.appendChild(checkbox);
+        testo.appendChild(nuovoTesto);
+        aggiungiText.value = "";
+      }
+    });
+  </script>
+</html>
