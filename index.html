@@ -1,16 +1,55 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="it">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>to do list</title>
+    <title>TO-DO LIST</title>
     <style>
+      /* stile del testo barrato quando la checkbox è selezionata */
       .deleted {
         text-decoration: line-through;
-        color: rgb(20, 20, 20);
+        color: rgb(100, 100, 100);
       }
+
+      /* stile del bottone elimina */
       .buttonx {
         background-color: red;
+        color: white;
+        border: none;
+        padding: 2px 8px;
+        margin-left: 10px;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+
+      /* input e bottone principale */
+      #aggiungiObiettivi {
+        padding: 5px;
+        width: 200px;
+      }
+
+      #btn1 {
+        padding: 5px 10px;
+        cursor: pointer;
+        border-radius: 5px;
+        border: none;
+        background-color: #26a3c9;
+        color: white;
+        font-weight: bold;
+      }
+
+      ul {
+        list-style-type: none;
+        padding-left: 0;
+      }
+
+      li {
+        margin: 8px 0;
+      }
+
+      body {
+        font-family: Arial, sans-serif;
+        padding: 20px;
       }
     </style>
   </head>
@@ -20,59 +59,59 @@
     <div>
       <input id="aggiungiObiettivi" type="text" placeholder="i miei obiettivi" />
       <!-- creo la mia "barra di ricerca"-->
-      <button id="btn1">CLICCA QUI</button
-      ><!-- creo il bottone che mi dovrà far uscire il testo come checkbox-->
+      <button id="btn1">CLICCA QUI</button>
+      <!-- creo il bottone che mi dovrà far uscire il testo come checkbox-->
       <ul id="testoObiettivi">
         <!--creo dove andrà a finire il testo -->
       </ul>
     </div>
+
+    <script>
+      const input = document.getElementById("aggiungiObiettivi"); // variabile collegata all'id input
+      console.dir(input);
+      const btn1 = document.getElementById("btn1"); //variabile collegata all id bottone
+      console.dir(btn1);
+      const list = document.getElementById("testoObiettivi"); // variabile collegata all id lista(ul)
+      console.dir(list);
+
+      btn1.addEventListener("click", function () {
+        //nuovo evento (addEvenListener) associato a clcik (bottone)
+        const valore = input.value.trim(); //creo la variabile (il mio input.value) dove salvo il testo scritto
+        if (valore !== "") {
+          //se valore è diverso da "" allora..
+          const li = document.createElement("li");
+          const checkbox = document.createElement("input");
+          checkbox.type = "checkbox";
+          const span = document.createElement("span");
+          span.textContent = valore; //metto il testo all'interno del valore
+
+          checkbox.addEventListener("change", function () {
+            //nuovo evento associato a checkbox(change)
+            console.log(checkbox.checked);
+
+            if (checkbox.checked) {
+              span.classList.add("deleted"); //se la mia checkbox è spuntata allora aggiungo la classe "deleted" al testo(span)
+            } else {
+              span.classList.remove("deleted");
+            }
+          });
+
+          const deleteBtn = document.createElement("button"); //creo il mio "bottone"
+          deleteBtn.textContent = "x"; //metto la "x" come testo del bottone
+          deleteBtn.classList.add("buttonx"); //aggiungo la classe "buttonx" al bottone
+
+          deleteBtn.addEventListener("click", () => {
+            //creo l'evento da eseguire
+            li.remove(); //rimuovere dal momento in cui fai "click" sul bottone
+          });
+
+          li.appendChild(span);
+          li.appendChild(checkbox);
+          li.appendChild(deleteBtn);
+          list.appendChild(li);
+          input.value = "";
+        }
+      });
+    </script>
   </body>
-
-  <script>
-    const input = document.getElementById("aggiungiObiettivi"); // variabile collegata all'id input
-    console.dir(input);
-    const btn1 = document.getElementById("btn1"); //variabile collegata all id bottone
-    console.dir(btn1);
-    const list = document.getElementById("testoObiettivi"); // variabile collegata all id lista(ul)
-    console.dir(list);
-
-    btn1.addEventListener("click", function () //nuovo evento (addEvenListener) associato a clcik (bottone)
-    {
-      const valore = input.value; //creo la variabile (il mio input.value) dove salvo il testo scritto
-      if (valore !== "") {
-        //se valore è diverso da "" allora..
-        const li = document.createElement("li");
-        const checkbox = document.createElement("input");
-        checkbox.type = "checkbox";
-        const span = document.createElement("span"); //span(ovunque)
-        span.textContent = valore; //metto il testo all'interno del valore
-
-        checkbox.addEventListener("change", function () {
-          //nuovo evento associato a checkbox(change)
-          console.log(checkbox.checked);
-
-          if (checkbox.checked) {
-            span.classList.add("deleted"); //se la mia checkbox è spuntata allora (---)
-          } else {
-            span.classList.remove("deleted");
-          }
-        });
-        const deleteBtn = document.createElement("button"); //creo il mio "bottone"
-        deleteBtn.textContent = "x"; //contenuto
-        deleteBtn.classList.add("buttonx"); //css
-
-        deleteBtn.addEventListener("click", () =>
-          //creo l'evento da eseguire
-          {
-            li.remove(); //rimuovere dal momento in cui fai "click" l'li
-          }
-        );
-        li.appendChild(span); //li>testo(span)
-        li.appendChild(checkbox); //li>
-        li.appendChild(deleteBtn); //cancella i li
-        list.appendChild(li); //ul>li
-        input.value = "";
-      }
-    });
-  </script>
 </html>
